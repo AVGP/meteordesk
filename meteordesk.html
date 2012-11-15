@@ -1,0 +1,31 @@
+<head>
+  <title>meteordesk</title>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>  
+</head>
+
+<body>
+  <p style="float:right;clear:both;">{{loginButtons align="right"}}</p>
+  {{> hello}}
+  {{> messageList}}
+</body>
+
+<template name="hello">
+  <h1>MeteorDesk</h1>
+  {{greeting}}
+</template>
+
+<template name="messageList">
+  <h1>Messages:</h1>
+  <ul>
+	{{#each messages}}
+		<li class="collapsible">
+			<h3>{{author}} {{subject}}</h3>
+			{{#if body}}
+				<div><pre>{{body}}</pre></div>
+			{{/if}}
+		</li>
+	{{/each}}
+  </ul>
+</template>
