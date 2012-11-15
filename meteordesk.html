@@ -6,8 +6,10 @@
 </head>
 
 <body>
-  <p style="float:right;clear:both;">{{loginButtons align="right"}}</p>
-  {{> hello}}
+  <div class="wrap">
+ 	<p style="float:right;clear:both;">{{loginButtons align="right"}}</p>
+  	{{> hello}}
+  </div>
 </body>
 
 <template name="hello">
@@ -38,8 +40,8 @@
 </template>
 
 <template name="sendMessage">
-	<form>
+	<form action="javascript:void(0)">
 		<input id="newMessage" />
-		<button type="button" id="send">Send</button>
+		<button type="submit">Send</button>
 	</form>
 </template>

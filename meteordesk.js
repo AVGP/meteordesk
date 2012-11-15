@@ -24,13 +24,13 @@ if (Meteor.isClient) {
   };
   
   Template.sendMessage.events = {
-  	"click #send": function (){
+  	"submit": function (){
   		Messages.insert({
   			"author": Meteor.user().profile.name,
   			"subject": $("#newMessage").val(),
   			"timestamp": new Date().getTime()
   		});
-  		$("#newMessage").val("");
+  		$("#newMessage").val("").focus();
   	}
   }
 }
@@ -43,8 +43,8 @@ if (Meteor.isServer) {
     // code to run on server at startup
 
 	  mailConnection = new imap.ImapConnection({
-        	username: 'martin.tests.stuff@gmail.com',
-        	password: 'thisissecret',
+        	username: '',
+        	password: '',
        	 	host: 'imap.gmail.com',
         	port: 993,
     	    secure: true

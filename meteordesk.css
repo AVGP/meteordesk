@@ -1,1 +1,20 @@
 /* CSS declarations go here */
+
+html,body {
+	font-family: Helvetica, Verdana, Arial, sans-serif;
+	background: #40BD54;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.wrap {
+	position: relative;
+	background: #fff;
+	width: 80%;
+	min-height: 100%;
+	padding: 5px;
+	border-radius: 3x;
+	margin: 0px auto;
+	box-shadow: #143 0px 2px 10px 10px;
+}
