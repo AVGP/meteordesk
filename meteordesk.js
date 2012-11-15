@@ -5,6 +5,10 @@ if (Meteor.isClient) {
     requestPermissions: { google: ["https://www.googleapis.com/auth/userinfo.email"] }
   });
 
+  Template.hello.isLoggedIn = function() {
+  	return Meteor.userId() != undefined;
+  }
+  
   Template.hello.greeting = function() {
   	if(Meteor.userLoaded()) {
   		return "Welcome to meteordesk, " + Meteor.user().profile.name + ".";
@@ -12,12 +16,23 @@ if (Meteor.isClient) {
   };
   
   Template.messageList.messages = function() {
-  	return Messages.find();
+  	return Messages.find({}, {sort: {"timestamp": -1}});
   };
   
   Template.messageList.rendered = function() {
 	$(".collapsible").accordion({collapsible: true, active: false});
   };
+  
+  Template.sendMessage.events = {
+  	"click #send": function (){
+  		Messages.insert({
+  			"author": Meteor.user().profile.name,
+  			"subject": $("#newMessage").val(),
+  			"timestamp": new Date().getTime()
+  		});
+  		$("#newMessage").val("");
+  	}
+  }
 }
 
 if (Meteor.isServer) {
@@ -28,8 +43,8 @@ if (Meteor.isServer) {
     // code to run on server at startup
 
 	  mailConnection = new imap.ImapConnection({
-        	username: '',
-        	password: '',
+        	username: 'martin.tests.stuff@gmail.com',
+        	password: 'thisissecret',
        	 	host: 'imap.gmail.com',
         	port: 993,
     	    secure: true
@@ -74,7 +89,8 @@ if (Meteor.isServer) {
 									Messages.insert({
             							"author": msg.headers.from[0],
             							"subject": msg.headers.subject[0],
-            							"body": body
+            							"body": body,
+							  			"timestamp": new Date().getTime()
         							});
         						}).run();
         					});
@@ -86,6 +102,8 @@ if (Meteor.isServer) {
     					});
     				} catch(e) {
     					//Catching exceptions is for communists.
+						mailConnection.logout();
+						return;
     				}
     			});
     		});
@@ -93,6 +111,6 @@ if (Meteor.isServer) {
     		
     });
     
-    setTimeout(fetchMails, 10000);
+    setTimeout(fetchMails, 5000);
   });
 }

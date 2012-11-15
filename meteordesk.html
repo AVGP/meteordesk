@@ -8,24 +8,38 @@
 <body>
   <p style="float:right;clear:both;">{{loginButtons align="right"}}</p>
   {{> hello}}
-  {{> messageList}}
 </body>
 
 <template name="hello">
   <h1>MeteorDesk</h1>
-  {{greeting}}
+  {{#if isLoggedIn}}
+  	{{greeting}}
+	{{> messageList}}
+  	{{> sendMessage}}
+  {{else}}
+  	<h2>Please log in first</h2>
+  {{/if}}
 </template>
 
 <template name="messageList">
   <h1>Messages:</h1>
   <ul>
 	{{#each messages}}
-		<li class="collapsible">
-			<h3>{{author}} {{subject}}</h3>
-			{{#if body}}
+		{{#if body}}
+			<li class="collapsible">
+				<h3>{{author}} {{subject}}</h3>
 				<div><pre>{{body}}</pre></div>
-			{{/if}}
-		</li>
+			</li>
+		{{else}}
+			<li><strong>{{author}}</strong>: {{subject}}</li>
+		{{/if}}
 	{{/each}}
   </ul>
+</template>
+
+<template name="sendMessage">
+	<form>
+		<input id="newMessage" />
+		<button type="button" id="send">Send</button>
+	</form>
 </template>
